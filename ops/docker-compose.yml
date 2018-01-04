@@ -1,0 +1,45 @@
+version: '2'
+
+services:
+  visum-elasticsearch:
+    container_name: visum-elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.5
+    environment:
+      - http.cors.enabled=true
+      - http.cors.allow-origin=*
+      - xpack.security.enabled=false
+    ports:
+     - 9200:9200
+     - 9300:9300
+    networks:
+      - visum-net
+    restart: unless-stopped
+
+  visum-kibana:
+    container_name: visum-kibana
+    image: docker.elastic.co/kibana/kibana:6.1.1
+    ports:
+     - 5601:5601
+    environment:
+      SERVER_NAME: kibana.example.org
+      ELASTICSEARCH_URL: http://visum-elasticsearch:9200
+    networks:
+      - visum-net
+    restart: unless-stopped
+
+  visum-grafana:
+    container_name: visum-grafana
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - /tmp/ops-grafana-data:/var/lib/grafana
+    depends_on:
+      - visum-elasticsearch
+    networks:
+      - visum-net
+    restart: unless-stopped
+
+networks:
+  visum-net:
+    driver: bridge
