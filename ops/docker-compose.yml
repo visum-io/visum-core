@@ -15,18 +15,6 @@ services:
       - visum-net
     restart: unless-stopped
 
-  visum-kibana:
-    container_name: visum-kibana
-    image: docker.elastic.co/kibana/kibana:6.1.1
-    ports:
-     - 5601:5601
-    environment:
-      SERVER_NAME: kibana.example.org
-      ELASTICSEARCH_URL: http://visum-elasticsearch:9200
-    networks:
-      - visum-net
-    restart: unless-stopped
-
   visum-grafana:
     container_name: visum-grafana
     image: grafana/grafana
