@@ -4,7 +4,7 @@ from src.crawler.repos import read_repositories
 
 class TestGithubReader(unittest.TestCase):
     def test_read_repositories(self):
-        names = read_repositories('dimastatz', 'Just4now!')
+        names = read_repositories('', '')
         self.assertEqual(len(names), 100)
 
 
