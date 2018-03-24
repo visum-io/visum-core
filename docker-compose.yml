@@ -24,11 +24,21 @@ services:
       - visum-net
     restart: unless-stopped
 
-  visum-core:
-    build: .
-    container_name: "visum-core"
+  visum-crawler:
+    build: ./src/crawler/.
+    container_name: "visum-crawler"
     ports:
       - "8088:8088"
+    depends_on:
+      - "visum-elasticsearch"
+    networks:
+      - visum-net
+
+  visum-app:
+    build: ./src/app/.
+    container_name: "visum-app"
+    ports:
+      - "8080:8080"
     depends_on:
       - "visum-elasticsearch"
     networks:

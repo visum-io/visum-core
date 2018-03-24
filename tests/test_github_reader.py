@@ -1,10 +1,10 @@
 import unittest
-from scripts.github_reader import read_repositories
+from src.crawler.repos import read_repositories
 
 
 class TestGithubReader(unittest.TestCase):
     def test_read_repositories(self):
-        names = read_repositories()
+        names = read_repositories('dimastatz', 'Just4now!')
         self.assertEqual(len(names), 100)
 
 
